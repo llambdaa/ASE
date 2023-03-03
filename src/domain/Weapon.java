@@ -12,8 +12,18 @@ public class Weapon {
     }
 
     public void attack(Position position, int strength, Entity enemy) {
+        if(outOfRange(position,enemy.position)){
+            System.out.println("enemy out of range");
+        }
         enemy.damage(strength + damage);
 
     }
 
+    private boolean outOfRange(Position position, Position enemy){
+        int distance = Position.comparePositions(position,enemy);
+        if(distance>=range || -distance<=-range){
+            return true;
+        }
+        return false;
+    }
 }

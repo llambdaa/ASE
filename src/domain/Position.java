@@ -24,5 +24,12 @@ public class Position {
         this.y = newPosition.getY();
     }
 
-
+    public static int comparePositions(Position basePos, Position comparedPos) {
+        int xDiff = basePos.getX() - comparedPos.getX();
+        int yDiff = basePos.getY() - comparedPos.getY();
+        if (xDiff >= yDiff) {
+            return xDiff;
+        }
+        return yDiff;
+    }
 }
