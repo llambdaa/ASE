@@ -8,7 +8,12 @@ public class Player extends Entity {
         this.name = name;
         baseArmor = 5;
         health = 100;
-        baseDamage = 10;
+        strength = 10;
+        weapon = new Weapon("fists", 1, 1);
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

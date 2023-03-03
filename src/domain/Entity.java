@@ -5,7 +5,9 @@ public abstract class Entity {
     protected int x;
     protected int y;
     protected int baseArmor;
-    protected int baseDamage;
+    protected int strength;
+
+    protected Weapon weapon;
 
     public void heal(int amount) {
         health += amount;
@@ -16,7 +18,7 @@ public abstract class Entity {
     }
 
     public void attack(Entity opponent) {
-        opponent.damage(baseDamage);
+        weapon.attack(strength, opponent);
     }
     public int getHealth(){
         return health;
