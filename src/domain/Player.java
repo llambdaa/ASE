@@ -10,6 +10,7 @@ public class Player extends Entity {
         health = 100;
         strength = 10;
         weapon = new Weapon("fists", 1, 1);
+        position = new Position(0, 0);
     }
 
     public String getName() {

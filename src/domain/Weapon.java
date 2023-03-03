@@ -5,14 +5,15 @@ public class Weapon {
     private int damage;
     private int range;
 
-    public Weapon(String name, int damage, int range){
+    public Weapon(String name, int damage, int range) {
         this.name = name;
-        this. damage = damage;
+        this.damage = damage;
         this.range = range;
     }
 
-    public void attack(int strength, Entity enemy){
+    public void attack(Position position, int strength, Entity enemy) {
         enemy.damage(strength + damage);
+
     }
 
 }

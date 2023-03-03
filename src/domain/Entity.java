@@ -2,8 +2,7 @@ package domain;
 
 public abstract class Entity {
     protected int health;
-    protected int x;
-    protected int y;
+    protected Position position;
     protected int baseArmor;
     protected int strength;
 
@@ -18,9 +17,10 @@ public abstract class Entity {
     }
 
     public void attack(Entity opponent) {
-        weapon.attack(strength, opponent);
+        weapon.attack(this.position, strength, opponent);
     }
-    public int getHealth(){
+
+    public int getHealth() {
         return health;
     }
 }
