@@ -145,4 +145,8 @@ public class Buffer {
         clone.content = this.content.clone();
         return clone;
     }
+    
+    public void print() {
+        System.out.println(this);
+    }
 }
