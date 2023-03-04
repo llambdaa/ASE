@@ -32,6 +32,12 @@ public class Buffer {
         return buffer;
     }
     
+    public static Buffer filled(int width, int height, char filler) {
+        Buffer buffer = new Buffer(width, height);
+        buffer.fill(filler);
+        return buffer;
+    }
+    
     public String toString() {
         return Arrays.asList(this.content).stream().map(String::valueOf).collect(Collectors.joining("\n"));
     }
