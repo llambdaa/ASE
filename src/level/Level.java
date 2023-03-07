@@ -4,7 +4,7 @@ import rendering.Buffer;
 
 import java.util.List;
 
-public class Level {
+public class Level extends Renderable {
     private List<Room> rooms;
     private Room spawnRoom;
     private Room bossRoom;
@@ -21,10 +21,12 @@ public class Level {
         this.activeRoom = room;
     }
     
+    @Override
     public void render() {
         this.activeRoom.render();
     }
     
+    @Override
     public Buffer getBuffer() {
         return this.activeRoom.getBuffer();
     }
