@@ -31,6 +31,10 @@ public class LayeredBuffer extends Buffer {
     public void render() {
         this.fill(this.background);
         for (Buffer buffer : this.buffers) {
+            if (buffer instanceof LayeredBuffer) {
+                ((LayeredBuffer) buffer).render();
+            }
+            
             Tuple<Integer, Integer> coordinates = this.coordinates.get(buffer);
             int x = coordinates._1;
             int y = coordinates._2;
