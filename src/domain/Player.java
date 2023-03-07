@@ -1,14 +1,10 @@
 package domain;
 
 public class Player extends Entity {
-    private String name;
 
 
     public Player(String name) {
-        this.name = name;
-        baseArmor = 5;
-        health = 100;
-        strength = 10;
+        super(100, 5, 10, name);
         weapon = new Weapon("fists", 1, 1);
         position = new Position(0, 0);
     }
