@@ -7,14 +7,16 @@ public abstract class Entity {
     protected int baseArmor;
     protected int strength;
     protected Weapon weapon;
+    protected Equipment equipment;
 
-    public Entity(int health, int baseArmor, int strength, String name, Weapon weapon, Position position){
+    public Entity(int health, int baseArmor, int strength, String name, Weapon weapon, Position position, Equipment equipment){
         this.health = health;
         this.baseArmor = baseArmor;
         this.strength = strength;
         this.name = name;
         this.weapon = weapon;
         this.position = position;
+        this.equipment = equipment;
     }
 
     public void heal(int amount) {
@@ -22,7 +24,7 @@ public abstract class Entity {
     }
 
     protected void damage(int amount) {
-        health -= (amount - baseArmor);
+        health -= (amount - (equipment.getArmor() + baseArmor));
     }
 
     private boolean isInRange(Position enemy) {
