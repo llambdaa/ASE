@@ -2,6 +2,7 @@ package rendering;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Buffer {
@@ -17,7 +18,12 @@ public class Buffer {
     
     public static Buffer from(String source) {
         List<String> lines = Arrays.asList(source.split("\n"));
-        int width = lines.stream().map(String::length).max(Integer::compareTo).get();
+        Optional<Integer> maxWidth = lines.stream().map(String::length).max(Integer::compareTo);
+        if (maxWidth.isEmpty()) {
+            return null;
+        }
+        
+        int width = maxWidth.get();
         int height = lines.size();
         
         Buffer buffer = new Buffer(width, height);
@@ -39,7 +45,7 @@ public class Buffer {
     }
     
     public String toString() {
-        return Arrays.asList(this.content).stream().map(String::valueOf).collect(Collectors.joining("\n"));
+        return Arrays.stream(this.content).map(String::valueOf).collect(Collectors.joining("\n"));
     }
     
     public void fill(char filler) {
