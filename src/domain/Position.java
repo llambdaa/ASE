@@ -18,13 +18,7 @@ public class Position {
         return y;
     }
 
-    public void setX(Position newPosition) {
-
-        this.x = newPosition.getX();
-        this.y = newPosition.getY();
-    }
-
-    public static int comparePositions(Position basePos, Position comparedPos) {
+    public static int getMaxDistance(Position basePos, Position comparedPos) {
         int xDiff = basePos.getX() - comparedPos.getX();
         int yDiff = basePos.getY() - comparedPos.getY();
         if (xDiff >= yDiff) {

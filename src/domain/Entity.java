@@ -30,4 +30,8 @@ public abstract class Entity {
     public int getHealth() {
         return health;
     }
+
+    public void setPosition(Position position){
+        this.position = position;
+    }
 }
