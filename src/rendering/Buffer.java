@@ -1,19 +1,22 @@
 package rendering;
 
+import utils.Numeric;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Buffer {
     private int width;
     private int height;
-    private char[][] content;
+    private char[][] symbols;
+    private String[][] colors;
     
     public Buffer(int width, int height) {
         this.width = width;
         this.height = height;
-        this.content = new char[height][width];
+        this.symbols = new char[height][width];
+        this.colors = new String[height][width];
     }
     
     public static Buffer from(String source) {
@@ -31,7 +34,7 @@ public class Buffer {
             char[] atomized = lines.get(h).toCharArray();
             
             for (int i = 0; i < atomized.length; i++) {
-                buffer.content[h][i] = atomized[i];
+                buffer.symbols[h][i] = atomized[i];
             }
         }
         
@@ -54,49 +57,116 @@ public class Buffer {
     }
     
     public String toString() {
-        return Arrays.stream(this.content).map(String::valueOf).collect(Collectors.joining("\n"));
+        boolean colored = false;
+        StringBuilder block = new StringBuilder();
+        StringBuilder line = new StringBuilder();
+        
+        for (int h = 0; h < this.symbols.length; h++) {
+            char[] horizontal = this.symbols[h];
+            for (int w = 0; w < horizontal.length; w++) {
+                String color = this.colors[h][w];
+                if (color != null) {
+                    line.append(color);
+                    colored = true;
+                } else if (colored) {
+                    line.append(ANSIIColor.RESET);
+                    colored = false;
+                }
+                
+                char symbol = horizontal[w];
+                line.append(symbol);
+            }
+            
+            block.append(line);
+            block.append("\n");
+            line.setLength(0);
+        }
+        
+        return block.toString();
     }
     
     public void fill(char filler) {
-        for (int h = 0; h < height; h++) {
-            for (int w = 0; w < width; w++) {
-                this.content[h][w] = filler;
+        this.fill(0, 0, this.width, this.height, filler);
+    }
+    
+    public void fill(int x, int y, int width, int height, char filler) {
+        int yStart = Numeric.clamp(0, this.height, y);
+        int xStart = Numeric.clamp(0, this.width, x);
+        int yEnd = Numeric.clamp(0, this.height, y + height);
+        int xEnd = Numeric.clamp(0, this.width, x + width);
+        
+        for (int h = yStart; h < yEnd; h++) {
+            for (int w = xStart; w < xEnd; w++) {
+                this.symbols[h][w] = filler;
             }
         }
     }
     
-    public void blank() {
+    public void color(String ansii) {
+        this.color(0, 0, this.width, this.height, ansii);
+    }
+    
+    public void color(int x, int y, int width, int height, String ansii) {
+        int yStart = Numeric.clamp(0, this.height, y);
+        int xStart = Numeric.clamp(0, this.width, x);
+        int yEnd = Numeric.clamp(0, this.height, y + height);
+        int xEnd = Numeric.clamp(0, this.width, x + width);
+        
+        for (int h = yStart; h < yEnd; h++) {
+            for (int w = xStart; w < xEnd; w++) {
+                this.colors[h][w] = ansii;
+            }
+        }
+    }
+    
+    public void clear() {
         fill(' ');
     }
     
     public void flipX() {
-        for (int h = 0; h < height; h++) {
-            char[] original = this.content[h];
-            char[] reversed = new char[this.width];
-            
-            for (int w = 0; w < this.width; w++) {
-                reversed[w] = original[this.width - 1 - w];
+        for (int h = 0; h < this.height; h++) {
+            for (int w = 0; w < this.width / 2; w++) {
+                int oppositeIndex = this.width - 1 - w;
+                
+                // Flip symbols
+                char oppositeSymbol = this.symbols[h][oppositeIndex];
+                this.symbols[h][oppositeIndex] = this.symbols[h][w];
+                this.symbols[h][w] = oppositeSymbol;
+                
+                // Flip colors
+                String oppositeColor = this.colors[h][oppositeIndex];
+                this.colors[h][oppositeIndex] = this.colors[h][w];
+                this.colors[h][w] = oppositeColor;
             }
-            
-            this.content[h] = reversed;
         }
     }
     
     public void flipY() {
         for (int h = 0; h < this.height / 2; h++) {
             int oppositeIndex = this.height - 1 - h;
-            char[] opposite = this.content[oppositeIndex];
-            this.content[oppositeIndex] = this.content[h];
-            this.content[h] = opposite;
+    
+            // Flip symbols
+            char[] oppositeSymbols = this.symbols[oppositeIndex];
+            this.symbols[oppositeIndex] = this.symbols[h];
+            this.symbols[h] = oppositeSymbols;
+            
+            // Flip colors
+            String[] oppositeColors = this.colors[oppositeIndex];
+            this.colors[oppositeIndex] = this.colors[h];
+            this.colors[h] = oppositeColors;
         }
     }
     
     public void write(int x, int y, Buffer buffer) {
+        if (buffer == null) {
+            return;
+        }
+        
         for (int h = 0; h < buffer.height; h++) {
             for (int w = 0; w < buffer.width; w++) {
                 int absX = x + w;
                 int absY = y + h;
-                char symbol = buffer.content[h][w];
+                char symbol = buffer.symbols[h][w];
                 
                 // Null character is skipped
                 if (symbol == 0) {
@@ -111,7 +181,7 @@ public class Buffer {
                     continue;
                 }
                 
-                this.content[absY][absX] = symbol;
+                this.symbols[absY][absX] = symbol;
             }
         }
     }
@@ -157,7 +227,8 @@ public class Buffer {
     
     public Buffer clone() {
         Buffer clone = new Buffer(this.width, this.height);
-        clone.content = this.content.clone();
+        clone.symbols = this.symbols.clone();
+        clone.colors = this.colors.clone();
         return clone;
     }
     
