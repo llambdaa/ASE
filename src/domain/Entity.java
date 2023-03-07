@@ -36,4 +36,8 @@ public abstract class Entity {
     public void setPosition(Position position){
         this.position = position;
     }
+
+    public String getName() {
+        return name;
+    }
 }

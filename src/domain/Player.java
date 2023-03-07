@@ -7,8 +7,4 @@ public class Player extends Entity {
         super(100, 5, 10, name, Weapon.FISTS, new Position(0,0));
     }
 
-    public String getName() {
-        return name;
-    }
-
 }
