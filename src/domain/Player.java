@@ -5,7 +5,7 @@ public class Player extends Entity {
 
     public Player(String name) {
         super(100, 5, 10, name);
-        weapon = new Weapon("fists", 1, 1);
+        weapon = Weapon.FISTS;
         position = new Position(0, 0);
     }
 

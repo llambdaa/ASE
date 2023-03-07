@@ -1,5 +1,7 @@
 package domain;
 
+import static java.lang.Math.abs;
+
 public class Position {
 
     private int x;
@@ -21,7 +23,7 @@ public class Position {
     public static int getMaxDistance(Position basePos, Position comparedPos) {
         int xDiff = basePos.getX() - comparedPos.getX();
         int yDiff = basePos.getY() - comparedPos.getY();
-        if (xDiff >= yDiff) {
+        if (abs(xDiff) >= abs(yDiff)) {
             return xDiff;
         }
         return yDiff;

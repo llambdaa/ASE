@@ -1,12 +1,10 @@
 package domain;
 
-public class Weapon {
-    private String name;
-    private int damage;
-    private int range;
+public enum Weapon {
+    DAGGER(5,1),
+    FISTS(1,1);
 
-    public Weapon(String name, int damage, int range) {
-        this.name = name;
+    Weapon(int damage, int range) {
         this.damage = damage;
         this.range = range;
     }
@@ -14,16 +12,20 @@ public class Weapon {
     public void attack(Position position, int strength, Entity enemy) {
         if(outOfRange(position,enemy.position)){
             System.out.println("enemy out of range");
+            return;
         }
         enemy.damage(strength + damage);
 
     }
 
     private boolean outOfRange(Position position, Position enemy){
-        int distance = Position.comparePositions(position,enemy);
-        if(distance>=range || -distance<=-range){
+        int distance = Position.getMaxDistance(position,enemy);
+        if(distance>range || distance<(-range)){
             return true;
         }
         return false;
     }
+
+    private int damage;
+    private int range;
 }
