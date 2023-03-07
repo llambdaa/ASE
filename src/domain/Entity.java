@@ -25,8 +25,13 @@ public abstract class Entity {
         health -= (amount - baseArmor);
     }
 
+    private boolean isInRange(Position enemy) {
+        int distance = position.getMaxAxisDistance(enemy);
+        return distance <= weapon.getRange();
+    }
+
     public void attack(Entity opponent) {
-        weapon.attack(this.position, strength, opponent);
+        opponent.damage(strength + weapon.getDamage());
     }
 
     public int getHealth() {

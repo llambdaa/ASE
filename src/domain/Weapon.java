@@ -9,13 +9,12 @@ public enum Weapon {
         this.range = range;
     }
 
-    public void attack(Position position, int strength, Entity enemy) {
-        enemy.damage(strength + damage);
+    public int getRange(){
+        return range;
     }
 
-    private boolean isInRange(Position position, Position enemy) {
-        int distance = position.getMaxAxisDistance(enemy);
-        return distance <= range;
+    public int getDamage() {
+        return damage;
     }
 
     private int damage;
