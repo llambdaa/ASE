@@ -44,6 +44,15 @@ public class Buffer {
         return buffer;
     }
     
+    public static Buffer border(int width, int height, char filler) {
+        Buffer base = Buffer.filled(width, height, filler);
+        if (width > 2 && height > 2) {
+            Buffer stencil = Buffer.filled(width - 2, height - 2, ' ');
+            base.write(1, 1, stencil);
+        }
+        return base;
+    }
+    
     public String toString() {
         return Arrays.stream(this.content).map(String::valueOf).collect(Collectors.joining("\n"));
     }
