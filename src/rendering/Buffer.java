@@ -1,5 +1,6 @@
 package rendering;
 
+import utils.Direction;
 import utils.Numeric;
 
 import java.util.Arrays;
