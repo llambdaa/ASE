@@ -8,11 +8,13 @@ public abstract class Entity {
     protected int strength;
     protected Weapon weapon;
 
-    public Entity(int health, int baseArmor, int strength, String name){
+    public Entity(int health, int baseArmor, int strength, String name, Weapon weapon, Position position){
         this.health = health;
         this.baseArmor = baseArmor;
         this.strength = strength;
         this.name = name;
+        this.weapon = weapon;
+        this.position = position;
     }
 
     public void heal(int amount) {
