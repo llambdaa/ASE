@@ -11,7 +11,7 @@ public class Door extends Renderable {
     private Room target;
     private boolean locked;
     
-    public Door(int x, int y, Room target, boolean locked) {
+    public Door(int x, int y, boolean locked) {
         this.x = x;
         this.y = y;
         this.target = target;
@@ -24,6 +24,10 @@ public class Door extends Renderable {
     
     public int getY() {
         return this.y;
+    }
+    
+    public void setTargetRoom(Room target) {
+        this.target = target;
     }
     
     public Room getTargetRoom() {
