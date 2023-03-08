@@ -14,7 +14,6 @@ public class Door extends Renderable {
     public Door(int x, int y, boolean locked) {
         this.x = x;
         this.y = y;
-        this.target = target;
         this.locked = locked;
     }
     
