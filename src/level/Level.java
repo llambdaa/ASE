@@ -6,28 +6,24 @@ import java.util.List;
 
 public class Level extends Renderable {
     private List<Room> rooms;
-    private Room spawnRoom;
-    private Room bossRoom;
-    private Room activeRoom;
+    private Room currentRoom;
     
-    public Level(List<Room> rooms, Room spawnRoom, Room bossRoom) {
+    public Level(List<Room> rooms) {
         this.rooms = rooms;
-        this.spawnRoom = spawnRoom;
-        this.bossRoom = bossRoom;
-        this.activeRoom = spawnRoom;
+        this.enter(rooms.get(0));
     }
     
     public void enter(Room room) {
-        this.activeRoom = room;
+        this.currentRoom = room;
     }
     
     @Override
     public void render() {
-        this.activeRoom.render();
+        this.currentRoom.render();
     }
     
     @Override
     public Buffer getBuffer() {
-        return this.activeRoom.getBuffer();
+        return this.currentRoom.getBuffer();
     }
 }

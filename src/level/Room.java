@@ -17,10 +17,10 @@ public class Room extends Renderable {
         this.width = width;
         this.height = height;
         this.doors = doors;
-        this.initialize();
+        this.build();
     }
     
-    private void initialize() {
+    private void build() {
         int width = this.width + 2;
         int height = this.height + 2;
         
@@ -32,7 +32,7 @@ public class Room extends Renderable {
         
         // 2) Generate room buffer
         this.buffer = new LayeredBuffer(width, height);
-        this.buffer.add(0, 0, this.wall);
+        this.buffer.add(this.wall, 0, 0);
     }
     
     @Override

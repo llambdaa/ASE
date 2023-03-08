@@ -14,7 +14,7 @@ public class LevelGenerator {
         List<Room> rooms = new ArrayList<>();
         rooms.add(room);
         
-        Level level = new Level(rooms, room, room);
+        Level level = new Level(rooms);
         return level;
     }
     

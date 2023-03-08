@@ -26,7 +26,7 @@ public class Door extends Renderable {
         return this.y;
     }
     
-    public Room getTarget() {
+    public Room getTargetRoom() {
         return this.target;
     }
     
