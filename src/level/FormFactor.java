@@ -1,5 +1,13 @@
 package level;
 
+import utils.Direction;
+import utils.Tuple;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public enum FormFactor {
     SMALL_SQUARE(1, 1),
     MEDIUM_SQUARE(2, 2),
@@ -18,6 +26,30 @@ public enum FormFactor {
     
     private static final int SMALL_ROOM_WIDTH = 11;
     private static final int SMALL_ROOM_HEIGHT = 11;
+    public static final Map<FormFactor, List<Tuple<Direction, Integer>>> DOOR_LOCATIONS = new HashMap<>();
+    
+    static {
+        int halfRoomWidth = FormFactor.SMALL_ROOM_WIDTH / 2;
+        int halfRoomHeight = FormFactor.SMALL_ROOM_HEIGHT / 2;
+        
+        for (FormFactor form : FormFactor.values()) {
+            List<Tuple<Direction, Integer>> locations = new ArrayList<>();
+            
+            for (int h = 0; h < form.horizontal; h++) {
+                int offset = halfRoomWidth + h * FormFactor.SMALL_ROOM_WIDTH;
+                locations.add(new Tuple<>(Direction.LEFT, offset));
+                locations.add(new Tuple<>(Direction.RIGHT, offset));
+            }
+            
+            for (int v = 0; v < form.vertical; v++) {
+                int offset = halfRoomHeight + v * FormFactor.SMALL_ROOM_HEIGHT;
+                locations.add(new Tuple<>(Direction.UP, offset));
+                locations.add(new Tuple<>(Direction.DOWN, offset));
+            }
+            
+            FormFactor.DOOR_LOCATIONS.put(form, locations);
+        }
+    }
     
     private int horizontal;
     private int vertical;
