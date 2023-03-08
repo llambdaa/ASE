@@ -57,12 +57,12 @@ public class Room extends Renderable {
                 return;
             }
             x = (wall == Direction.LEFT) ? -1 : this.width;
-            y = offset + 1;
+            y = offset;
         } else {
             if (offset >= this.width) {
                 return;
             }
-            x = offset + 1;
+            x = offset;
             y = (wall == Direction.UP) ? -1 : this.height;
         }
         
