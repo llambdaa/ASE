@@ -9,7 +9,7 @@ public class ANSIIColor {
     public static String BLUE = "\u001b[34m";
     public static String MAGENTA = "\u001b[35m";
     public static String CYAN = "\u001b[36m";
-    public static String WHITE = "\u001b[37m";
+    public static String GRAY = "\u001b[37m";
     
     public static String getCustom(int a, int b) {
         return String.format("\u001b[38;5;%sm", a * 16 + b);

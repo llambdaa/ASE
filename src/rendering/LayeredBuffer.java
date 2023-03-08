@@ -2,10 +2,7 @@ package rendering;
 
 import utils.Tuple;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LayeredBuffer extends Buffer {
     private List<Buffer> buffers;
@@ -23,13 +20,21 @@ public class LayeredBuffer extends Buffer {
         this(width, height, ' ');
     }
     
-    public void add(int x, int y, Buffer buffer) {
+    public void add(Buffer buffer, int x, int y) {
         this.buffers.add(buffer);
         this.coordinates.put(buffer, new Tuple<>(x, y));
     }
     
+    public void move(Buffer target, int x, int y) {
+        if (this.coordinates.containsKey(target)) {
+            this.coordinates.put(target, new Tuple<>(x, y));
+        }
+    }
+    
     public void render() {
         this.fill(this.background);
+        this.color(ANSIIColor.RESET);
+        
         for (Buffer buffer : this.buffers) {
             if (buffer instanceof LayeredBuffer) {
                 ((LayeredBuffer) buffer).render();

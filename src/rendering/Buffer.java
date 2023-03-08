@@ -182,7 +182,9 @@ public class Buffer {
                     continue;
                 }
                 
+                String ansii = buffer.colors[h][w];
                 this.symbols[absY][absX] = symbol;
+                this.colors[absY][absX] = ansii;
             }
         }
     }
