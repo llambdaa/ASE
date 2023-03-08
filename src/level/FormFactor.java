@@ -26,6 +26,7 @@ public enum FormFactor {
     
     private static final int SMALL_ROOM_WIDTH = 11;
     private static final int SMALL_ROOM_HEIGHT = 11;
+    public static final int DOOR_DEVIATION = 1;
     public static final Map<FormFactor, List<Tuple<Direction, Integer>>> DOOR_LOCATIONS = new HashMap<>();
     
     static {

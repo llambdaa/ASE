@@ -31,7 +31,8 @@ public class LevelGenerator {
         List<Tuple<Direction, Integer>> doorsPositions = LevelGenerator.selectDoorPositions(form, doorCount);
         
         for (Tuple<Direction, Integer> door : doorsPositions) {
-            room.addDoor(door._1, door._2);
+            IntRange deviation = IntRange.from(-FormFactor.DOOR_DEVIATION, FormFactor.DOOR_DEVIATION);
+            room.addDoor(door._1, door._2 + deviation.random());
         }
         
         return room;
