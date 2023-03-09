@@ -55,6 +55,14 @@ public enum FormFactor {
     private int horizontal;
     private int vertical;
     
+    public int getHorizontalScale() {
+        return this.horizontal;
+    }
+    
+    public int getVerticalScale() {
+        return this.vertical;
+    }
+    
     public int getScaledWidth() {
         return this.horizontal * SMALL_ROOM_WIDTH;
     }
