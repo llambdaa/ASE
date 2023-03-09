@@ -2,7 +2,7 @@ package level;
 
 import rendering.Buffer;
 
-public class Door extends Renderable {
+public class Door implements Renderable {
     private static Buffer LOCKED_BUFFER = Buffer.from("X");
     private static Buffer UNLOCKED_BUFFER = Buffer.from("O");
     

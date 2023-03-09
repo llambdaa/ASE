@@ -7,7 +7,7 @@ import utils.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room extends Renderable {
+public class Room implements Renderable {
     private int width;
     private int height;
     private List<Door> doors;

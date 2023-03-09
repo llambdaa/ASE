@@ -4,7 +4,7 @@ import rendering.Buffer;
 
 import java.util.List;
 
-public class Level extends Renderable {
+public class Level implements Renderable {
     private List<Room> rooms;
     private Room currentRoom;
     
