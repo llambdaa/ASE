@@ -9,7 +9,7 @@ public abstract class Entity {
     protected Weapon weapon;
     protected Equipment equipment;
 
-    public Entity(int health, int baseArmor, int strength, String name, Weapon weapon, Position position, Equipment equipment){
+    public Entity(int health, int baseArmor, int strength, String name, Weapon weapon, Position position, Equipment equipment) {
         this.health = health;
         this.baseArmor = baseArmor;
         this.strength = strength;
@@ -40,11 +40,15 @@ public abstract class Entity {
         return health;
     }
 
-    public void setPosition(Position position){
+    public void setPosition(Position position) {
         this.position = position;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

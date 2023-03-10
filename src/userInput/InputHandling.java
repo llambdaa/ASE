@@ -1,6 +1,7 @@
 package userInput;
 
 import domain.Player;
+import domain.Position;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -15,30 +16,34 @@ public class InputHandling implements KeyListener {
         registerKeys();
     }
 
-    private void registerKeys(){
+    private void registerKeys() {
         keyHandling.put(KeyEvent.VK_W, () -> {
             //w
-            System.out.println("w");
+            Position currentPos = player.getPosition();
+            player.setPosition(new Position(currentPos.getX(), currentPos.getY() + 1));
         });
         keyHandling.put(KeyEvent.VK_A, () -> {
             //a
-
+            Position currentPos = player.getPosition();
+            player.setPosition(new Position(currentPos.getX() - 1, currentPos.getY()));
         });
         keyHandling.put(KeyEvent.VK_S, () -> {
             //s
-
+            Position currentPos = player.getPosition();
+            player.setPosition(new Position(currentPos.getX(), currentPos.getY() - 1));
         });
         keyHandling.put(KeyEvent.VK_D, () -> {
             //d
-
+            Position currentPos = player.getPosition();
+            player.setPosition(new Position(currentPos.getX() + 1, currentPos.getY()));
         });
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
         this.keyHandling.get(e.getKeyCode()).run();
     }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
