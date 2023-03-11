@@ -1,6 +1,7 @@
 package level;
 
 import utils.Direction;
+import utils.IntRange;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,29 @@ public class LevelGenerator {
         return null;
     }
     
-    public static List<RoomPlacement> findValidRoomPlacements(int x, int y, Direction direction) {
+    public static RoomPlacement selectRoomPlacement(int x, int y, Direction direction) {
+        List<RoomPlacement> placements = findValidRoomPlacements(x, y, direction);
+        
+        // Each placement is represented by multiple duplicate indices to it,
+        // depending on the preference value of the underlying form. The higher
+        // the preference, the more often the placement's index occurs.
+        List<Integer> indices = new ArrayList<>();
+        for (int p = 0; p < placements.size(); p++) {
+            RoomPlacement placement = placements.get(p);
+            int preference = placement.form().getPreference();
+            
+            for (int i = 0; i < preference; i++) {
+                indices.add(p);
+            }
+        }
+        
+        // Then, any of the indices is selected, which then
+        // gets resolved into a concrete placement
+        int selection = indices.get(IntRange.from(0, indices.size() - 1).random());
+        return placements.get(selection);
+    }
+    
+    private static List<RoomPlacement> findValidRoomPlacements(int x, int y, Direction direction) {
         if (direction.isHorizontal()) {
             return findValidHorizontalRoomPlacements(x, y, direction == Direction.LEFT);
         } else {
