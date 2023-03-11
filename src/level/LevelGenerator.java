@@ -23,7 +23,7 @@ public class LevelGenerator {
         }
     }
     
-    public static List<RoomPlacement> findValidHorizontalRoomPlacements(int x, int y, boolean left) {
+    private static List<RoomPlacement> findValidHorizontalRoomPlacements(int x, int y, boolean left) {
         List<RoomPlacement> result = new ArrayList<>();
         for (FormFactor form : FormFactor.values()) {
             // When looking for room placements to the right, the search mask merely is moved
@@ -45,7 +45,7 @@ public class LevelGenerator {
         return result;
     }
     
-    public static List<RoomPlacement> findValidVerticalRoomPlacements(int x, int y, boolean up) {
+    private static List<RoomPlacement> findValidVerticalRoomPlacements(int x, int y, boolean up) {
         List<RoomPlacement> result = new ArrayList<>();
         for (FormFactor form : FormFactor.values()) {
             int yu = up ?
