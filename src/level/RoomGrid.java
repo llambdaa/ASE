@@ -18,7 +18,18 @@ public class RoomGrid {
     }
     
     public boolean isFree(GridPosition position) {
-        return !this.grid[position.y()][position.x()];
+        int x = position.x() + horizontalOffset;
+        int y = position.y() + verticalOffset;
+        
+        if (x < 0 || x >= this.width) {
+            return false;
+        }
+        
+        if (y < 0 || y >= this.height) {
+            return false;
+        }
+        
+        return !this.grid[y][x];
     }
     
     public boolean fits(RoomPlacement placement) {
