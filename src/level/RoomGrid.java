@@ -32,6 +32,12 @@ public class RoomGrid {
         return !this.grid[y][x];
     }
     
+    public void reserve(GridPosition position) {
+        int x = position.x() + horizontalOffset;
+        int y = position.y() + verticalOffset;
+        this.grid[y][x] = true;
+    }
+    
     public boolean fits(RoomPlacement placement) {
         int xMin = placement.x() + this.horizontalOffset;
         int xMax = xMin + placement.form().getHorizontalScale();
