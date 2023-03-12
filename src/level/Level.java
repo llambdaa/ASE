@@ -2,28 +2,24 @@ package level;
 
 import rendering.Buffer;
 
-import java.util.List;
-
 public class Level implements Renderable {
-    private List<Room> rooms;
-    private Room currentRoom;
+    private Room room;
     
-    public Level(List<Room> rooms) {
-        this.rooms = rooms;
-        this.enter(rooms.get(0));
+    public Level(Room spawn) {
+        this.enter(spawn);
     }
     
     public void enter(Room room) {
-        this.currentRoom = room;
+        this.room = room;
     }
     
     @Override
     public void render() {
-        this.currentRoom.render();
+        this.room.render();
     }
     
     @Override
     public Buffer getBuffer() {
-        return this.currentRoom.getBuffer();
+        return this.room.getBuffer();
     }
 }

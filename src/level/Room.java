@@ -33,18 +33,6 @@ public class Room implements Renderable {
         this.buffer.add(this.wall, 0, 0);
     }
     
-    public GridPosition getGridStart() {
-        return this.placement.start();
-    }
-    
-    public FormFactor getFormFactor() {
-        return this.placement.form();
-    }
-    
-    public List<Door> getDoors() {
-        return this.doors;
-    }
-    
     public void addDoor(Direction wall, int offset) {
         this.addDoor(wall, offset, false);
     }
