@@ -21,6 +21,23 @@ public class RoomGrid {
         return !this.grid[position.y()][position.x()];
     }
     
+    public boolean fits(RoomPlacement placement) {
+        int xMin = placement.x() + this.horizontalOffset;
+        int xMax = xMin + placement.form().getHorizontalScale();
+        int yMin = placement.y() + this.verticalOffset;
+        int yMax = yMin + placement.form().getVerticalScale();
+        
+        for (int h = yMin; h < yMax; h++) {
+            for (int w = xMin; w < xMax; w++) {
+                if (!this.grid[h][w]) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
+    
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
