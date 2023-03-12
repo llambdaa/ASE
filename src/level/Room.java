@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Room implements Renderable {
+    private RoomPlacement placement;
     private int width;
     private int height;
     private List<Door> doors;
@@ -15,9 +16,10 @@ public class Room implements Renderable {
     private Buffer wall;
     private LayeredBuffer buffer;
     
-    public Room(FormFactor form) {
-        this.width = form.getScaledWidth();
-        this.height = form.getScaledHeight();
+    public Room(RoomPlacement placement) {
+        this.placement = placement;
+        this.width = placement.form().getScaledWidth();
+        this.height = placement.form().getScaledHeight();
         this.doors = new ArrayList<>();
         this.build();
     }
@@ -29,6 +31,14 @@ public class Room implements Renderable {
         this.wall = Buffer.border(totalWidth, totalHeight, '█');
         this.buffer = new LayeredBuffer(totalWidth, totalHeight);
         this.buffer.add(this.wall, 0, 0);
+    }
+    
+    public GridPosition getGridStart() {
+        return this.placement.start();
+    }
+    
+    public FormFactor getFormFactor() {
+        return this.placement.form();
     }
     
     public List<Door> getDoors() {
