@@ -17,65 +17,8 @@ public class RoomGrid {
         this.grid = new boolean[height][width];
     }
     
-    public boolean isFree(GridPosition position, FormFactor form) {
-        return this.isFree(position.x(), position.y(), form);
-    }
-    
-    public boolean isFree(int x, int y, FormFactor form) {
-        int xMin = x + this.horizontalOffset;
-        int xMax = xMin + form.getHorizontalScale();
-        int yMin = y + this.verticalOffset;
-        int yMax = yMin + form.getVerticalScale();
-        
-        for (int h = yMin; h < yMax; h++) {
-            for (int w = xMin; w < xMax; w++) {
-                if (w < 0 || w >= this.width) {
-                    return false;
-                }
-                
-                if (h < 0 || h >= this.height) {
-                    return false;
-                }
-                
-                if (this.grid[h][w]) {
-                    return false;
-                }
-            }
-        }
-        
-        return true;
-    }
-    
-    public Room generateSpawnRoom() {
-        return this.place(new RoomPlacement(0, 0, FormFactor.SMALL_SQUARE));
-    }
-    
-    public Room place(RoomPlacement placement) {
-        int xMin = placement.x() + this.horizontalOffset;
-        int xMax = xMin + placement.form().getHorizontalScale();
-        int yMin = placement.y() + this.verticalOffset;
-        int yMax = yMin + placement.form().getVerticalScale();
-        
-        for (int h = yMin; h < yMax; h++) {
-            for (int w = xMin; w < xMax; w++) {
-                this.grid[h][w] = true;
-            }
-        }
-        
-        return new Room(placement);
-    }
-    
-    public void free(RoomPlacement placement) {
-        int xMin = placement.x() + this.horizontalOffset;
-        int xMax = xMin + placement.form().getHorizontalScale();
-        int yMin = placement.y() + this.verticalOffset;
-        int yMax = yMin + placement.form().getVerticalScale();
-        
-        for (int h = yMin; h < yMax; h++) {
-            for (int w = xMin; w < xMax; w++) {
-                this.grid[h][w] = false;
-            }
-        }
+    public boolean isFree(GridPosition position) {
+        return !this.grid[position.y()][position.x()];
     }
     
     @Override
