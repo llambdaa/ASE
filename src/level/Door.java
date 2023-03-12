@@ -1,11 +1,13 @@
 package level;
 
 import rendering.Buffer;
+import utils.Direction;
 
 public class Door implements Renderable {
     private static Buffer LOCKED_BUFFER = Buffer.from("X");
     private static Buffer UNLOCKED_BUFFER = Buffer.from("O");
     
+    private DoorPlacement placement;
     private int x;
     private int y;
     private Room target;
@@ -15,6 +17,18 @@ public class Door implements Renderable {
         this.x = x;
         this.y = y;
         this.locked = locked;
+    }
+    
+    public DoorPlacement getPlacement() {
+        return this.placement;
+    }
+    
+    public GridPosition getGridPosition() {
+        return this.placement.position();
+    }
+    
+    public Direction getFacingDirection() {
+        return this.placement.facing();
     }
     
     public int getX() {
