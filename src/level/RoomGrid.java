@@ -1,5 +1,7 @@
 package level;
 
+import rendering.ANSIIColor;
+
 public class RoomGrid {
     private int width;
     private int height;
@@ -83,8 +85,10 @@ public class RoomGrid {
             for (int w = 0; w < this.width; w++) {
                 boolean populated = this.grid[h][w];
                 if (populated) {
+                    result.append(ANSIIColor.GREEN);
                     result.append("1 ");
                 } else {
+                    result.append(ANSIIColor.GRAY);
                     result.append("0 ");
                 }
             }
