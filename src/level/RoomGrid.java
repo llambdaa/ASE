@@ -1,8 +1,5 @@
 package level;
 
-import utils.Direction;
-import utils.Tuple;
-
 public class RoomGrid {
     private int width;
     private int height;
@@ -18,25 +15,8 @@ public class RoomGrid {
         this.grid = new boolean[height][width];
     }
     
-    public Tuple<Integer, Integer> getAdjacentPosition(Tuple<Integer, Integer> reference, Direction direction) {
-        return this.getAdjacentPosition(reference._1, reference._2, direction);
-    }
-    
-    public Tuple<Integer, Integer> getAdjacentPosition(int x, int y, Direction direction) {
-        return switch (direction) {
-            case UP: {
-                yield new Tuple<>(x, y - 1);
-            }
-            case DOWN: {
-                yield new Tuple<>(x, y + 1);
-            }
-            case LEFT: {
-                yield new Tuple<>(x - 1, y);
-            }
-            case RIGHT: {
-                yield new Tuple<>(x + 1, y);
-            }
-        };
+    public boolean isFree(GridPosition position, FormFactor form) {
+        return this.isFree(position.x(), position.y(), form);
     }
     
     public boolean isFree(int x, int y, FormFactor form) {
@@ -64,7 +44,11 @@ public class RoomGrid {
         return true;
     }
     
-    public void place(RoomPlacement placement) {
+    public Room generateSpawnRoom() {
+        return this.place(new RoomPlacement(0, 0, FormFactor.SMALL_SQUARE));
+    }
+    
+    public Room place(RoomPlacement placement) {
         int xMin = placement.x() + this.horizontalOffset;
         int xMax = xMin + placement.form().getHorizontalScale();
         int yMin = placement.y() + this.verticalOffset;
@@ -75,6 +59,8 @@ public class RoomGrid {
                 this.grid[h][w] = true;
             }
         }
+        
+        return new Room(placement);
     }
     
     public void free(RoomPlacement placement) {
