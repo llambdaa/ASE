@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 public class LevelGenerator {
-    private static final int MAX_ROOMS = 20;
+    private static final int MAX_ROOMS = 30;
     private static final int MAX_DEAD_ENDS = 6;
-    private static final int GRID_WIDTH = 10;
-    private static final int GRID_HEIGHT = 10;
+    private static final int MAX_ADJACENT_ROOMS = 4;
+    private static final int GRID_WIDTH = 11;
+    private static final int GRID_HEIGHT = 11;
     
     public static Level generate() {
         final Direction[] directions = Direction.values();
@@ -44,7 +45,7 @@ public class LevelGenerator {
                     Direction direction = directions[index];
                     GridPosition adjacent = position.getAdjacentPosition(direction);
                     
-                    if (grid.isFree(adjacent)) {
+                    if (grid.isFree(adjacent) && !grid.isDenselySurrounded(adjacent, MAX_ADJACENT_ROOMS)) {
                         RoomPlacement appended = RoomPlacement.small(adjacent);
                         grid.reserve(adjacent);
                         deadends.add(appended);

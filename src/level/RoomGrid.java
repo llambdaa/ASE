@@ -32,6 +32,27 @@ public class RoomGrid {
         return !this.grid[y][x];
     }
     
+    public boolean isDenselySurrounded(GridPosition position, int threshold) {
+        int occupied = 0;
+        for (int h = -1; h <= 1; h++) {
+            for (int w = -1; w <= 1; w++) {
+                if (h == 0 && w == 0) {
+                    continue;
+                }
+                
+                int x = position.x() + w;
+                int y = position.y() + h;
+                GridPosition adjacent = new GridPosition(x, y);
+                
+                if (!this.isFree(adjacent)) {
+                    occupied++;
+                }
+            }
+        }
+        
+        return occupied >= threshold;
+    }
+    
     public void reserve(GridPosition position) {
         int x = position.x() + horizontalOffset;
         int y = position.y() + verticalOffset;
