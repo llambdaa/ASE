@@ -17,8 +17,9 @@ public class LevelGenerator {
     public static Level generate() {
         LevelBlueprint blueprint = LevelGenerator.findValidBlueprint();
         Map<RoomPlacement, List<DoorPlacement>> aggregated = LevelGenerator.aggregate(blueprint);
+        Room spawn = materialize(aggregated);
         
-        return new Level(null);
+        return new Level(spawn);
     }
     
     private static LevelBlueprint findValidBlueprint() {
@@ -213,6 +214,43 @@ public class LevelGenerator {
         }
         
         return allDoors;
+    }
+    
+    private static Room materialize(Map<RoomPlacement, List<DoorPlacement>> aggregated) {
+        // 1) Generate Actual Room for Each Placement
+        Map<Room, List<DoorPlacement>> roomDoorMapping = new HashMap<>();
+        for (var entry : aggregated.entrySet()) {
+            Room room = new Room(entry.getKey());
+            roomDoorMapping.put(room, entry.getValue());
+        }
+        
+        // 2) Attach Doors To Each Room
+        for (var entry : roomDoorMapping.entrySet()) {
+            Room room = entry.getKey();
+            for (DoorPlacement door : entry.getValue()) {
+                // The adjacent position being pointed to by the
+                // room's door points to the target room that is
+                // to be entered when walking through that door.
+                GridPosition adjacent = door.position().getAdjacentPosition(door.facing());
+                
+                // However, the room in which the position is
+                // located in is not known yet.
+                for (Room other : roomDoorMapping.keySet()) {
+                    if (other.getPlacement().contains(adjacent)) {
+                        room.addDoor(door, other);
+                    }
+                }
+            }
+        }
+        
+        // 3) Return Spawn Room
+        for (Room room : roomDoorMapping.keySet()) {
+            if (room.getPlacement().position().equals(SPAWN)) {
+                return room;
+            }
+        }
+        
+        return null;
     }
     
 }
