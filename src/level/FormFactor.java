@@ -1,13 +1,5 @@
 package level;
 
-import utils.Direction;
-import utils.Tuple;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public enum FormFactor {
     SMALL_SQUARE(1, 1),
     MEDIUM_SQUARE(2, 2),
