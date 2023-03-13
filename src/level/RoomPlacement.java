@@ -25,4 +25,19 @@ public record RoomPlacement(GridPosition position, FormFactor form) {
         return this.position.y();
     }
     
+    public boolean contains(GridPosition position) {
+        int x = position.x();
+        int y = position.y();
+        
+        if (x < this.x() || x > this.x() + form.getHorizontalScale()) {
+            return false;
+        }
+        
+        if (y < this.y() || y > this.y() + form.getVerticalScale()) {
+            return false;
+        }
+        
+        return true;
+    }
+    
 }
