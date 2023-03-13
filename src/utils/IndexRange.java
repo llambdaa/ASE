@@ -13,12 +13,12 @@ public record IndexRange(int min, int max) {
     
     public int[] select(int amount) {
         // 1) Rectify Parameters
-        int span = this.max - this.min;
+        int span = this.max - this.min + 1;
         amount = Math.min(amount, span);
         
         // 2) Initialize Index List
         List<Integer> indices = new ArrayList<>();
-        for (int i = this.min; i < this.max; i++) {
+        for (int i = this.min; i <= this.max; i++) {
             indices.add(i);
         }
         
