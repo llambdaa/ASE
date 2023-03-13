@@ -1,34 +1,18 @@
 package level;
 
 import rendering.Buffer;
-import utils.Direction;
 
 public class Door implements Renderable {
-    private static Buffer LOCKED_BUFFER = Buffer.from("X");
-    private static Buffer UNLOCKED_BUFFER = Buffer.from("O");
+    private static Buffer BUFFER = Buffer.from("O");
     
-    private DoorPlacement placement;
     private int x;
     private int y;
     private Room target;
-    private boolean locked;
     
-    public Door(int x, int y, boolean locked) {
+    public Door(int x, int y, Room target) {
         this.x = x;
         this.y = y;
-        this.locked = locked;
-    }
-    
-    public DoorPlacement getPlacement() {
-        return this.placement;
-    }
-    
-    public GridPosition getGridPosition() {
-        return this.placement.position();
-    }
-    
-    public Direction getFacingDirection() {
-        return this.placement.facing();
+        this.target = target;
     }
     
     public int getX() {
@@ -39,16 +23,8 @@ public class Door implements Renderable {
         return this.y;
     }
     
-    public void setTargetRoom(Room target) {
-        this.target = target;
-    }
-    
     public Room getTargetRoom() {
         return this.target;
-    }
-    
-    public void unlock() {
-        this.locked = false;
     }
     
     @Override
@@ -56,6 +32,6 @@ public class Door implements Renderable {
     
     @Override
     public Buffer getBuffer() {
-       return this.locked ? Door.LOCKED_BUFFER : Door.UNLOCKED_BUFFER;
+       return Door.BUFFER;
     }
 }
