@@ -16,33 +16,10 @@ public enum FormFactor {
         this.vertical = vertical;
     }
     
-    private static final int SMALL_ROOM_WIDTH = 11;
-    private static final int SMALL_ROOM_HEIGHT = 11;
-    public static final int DOOR_DEVIATION = 1;
-    public static final Map<FormFactor, List<Tuple<Direction, Integer>>> BUFFER_DOOR_LOCATIONS = new HashMap<>();
-    
-    static {
-        int halfRoomWidth = FormFactor.SMALL_ROOM_WIDTH / 2;
-        int halfRoomHeight = FormFactor.SMALL_ROOM_HEIGHT / 2;
-        
-        for (FormFactor form : FormFactor.values()) {
-            List<Tuple<Direction, Integer>> locations = new ArrayList<>();
-            
-            for (int h = 0; h < form.horizontal; h++) {
-                int offset = halfRoomWidth + h * FormFactor.SMALL_ROOM_WIDTH;
-                locations.add(new Tuple<>(Direction.LEFT, offset));
-                locations.add(new Tuple<>(Direction.RIGHT, offset));
-            }
-            
-            for (int v = 0; v < form.vertical; v++) {
-                int offset = halfRoomHeight + v * FormFactor.SMALL_ROOM_HEIGHT;
-                locations.add(new Tuple<>(Direction.UP, offset));
-                locations.add(new Tuple<>(Direction.DOWN, offset));
-            }
-            
-            FormFactor.BUFFER_DOOR_LOCATIONS.put(form, locations);
-        }
-    }
+    public static final int SMALL_ROOM_WIDTH = 11;
+    public static final int SMALL_ROOM_HEIGHT = 11;
+    public static final int DOOR_OFFSET_X = (int) Math.ceil((SMALL_ROOM_WIDTH / 2D) - 1);
+    public static final int DOOR_OFFSET_Y = (int) Math.ceil((SMALL_ROOM_HEIGHT / 2D) - 1);
     
     private int horizontal;
     private int vertical;
