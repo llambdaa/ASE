@@ -19,4 +19,14 @@ public record GridPosition(int x, int y) {
             }
         };
     }
+    
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof GridPosition) {
+            GridPosition other = (GridPosition) object;
+            return this.x == other.x && this.y == other.y;
+        }
+        
+        return false;
+    }
 }
