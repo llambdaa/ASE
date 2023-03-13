@@ -33,52 +33,30 @@ public class Room implements Renderable {
         this.buffer.add(this.wall, 0, 0);
     }
     
-    public void addDoor(Direction wall, int offset) {
-        this.addDoor(wall, offset, false);
+    public RoomPlacement getPlacement() {
+        return this.placement;
     }
     
-    public void addDoor(Direction wall, int offset, boolean locked) {
-        // The offset must specify a position along the wall that is
-        // inside the room. If it does not, the door is not placed.
-        if (offset < 0) {
-            return;
-        }
+    public void addDoor(DoorPlacement placement, Room target) {
+        GridPosition position = placement.position();
+        Direction facing = placement.facing();
         
-        // The technical door coordinates lie outside the room, as
-        // the door is embedded inside the wall. This simplifies the
-        // check for whether a player is walking into/through a door.
-        // Hence, they are offset in regard to the room coordinates
-        // and can be negative or greater than the dimensional sizes.
         int x, y;
-        if (wall == Direction.LEFT || wall == Direction.RIGHT) {
-            if (offset >= this.height) {
-                return;
-            }
-            x = (wall == Direction.LEFT) ? -1 : this.width;
-            y = offset;
+        if (facing == Direction.LEFT || facing == Direction.RIGHT) {
+            // Horizontal placement
+            int dy = position.y() - this.placement.position().y();
+            x = (facing == Direction.LEFT) ? 0 : this.width + 1;
+            y = FormFactor.DOOR_OFFSET_Y + dy * FormFactor.SMALL_ROOM_HEIGHT + 1;
         } else {
-            if (offset >= this.width) {
-                return;
-            }
-            x = offset;
-            y = (wall == Direction.UP) ? -1 : this.height;
+            // Vertical placement
+            int dx = position.x() - this.placement.position().x();
+            y = (facing == Direction.UP) ? 0 : this.height + 1;
+            x = FormFactor.DOOR_OFFSET_X + dx * FormFactor.SMALL_ROOM_WIDTH + 1;
         }
         
-        // The door may only be placed when no other door is located
-        // in the same position.
-        for (Door existing : this.doors) {
-            if (existing.getX() == x && existing.getY() == y) {
-                return;
-            }
-        }
-        
-        Door door = new Door(x, y, locked);
+        Door door = new Door(x, y, target);
         this.doors.add(door);
-        
-        // During rendering however, the coordinates are related back
-        // to the coordinates of the wall, as the door is drawn onto
-        // the wall buffer.
-        this.wall.write(door.getX() + 1, door.getY() + 1, door.getBuffer());
+        this.wall.write(x, y, door.getBuffer());
     }
     
     @Override
