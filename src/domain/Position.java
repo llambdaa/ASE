@@ -17,6 +17,14 @@ public class Position {
         return y;
     }
 
+    public void setX(int xDiff){
+        this.x += xDiff;
+    }
+
+    public void setY(int yDiff){
+        this.y += yDiff;
+    }
+
     public int getMaxAxisDistance(Position comparedPos) {
         int xDiff = Math.abs(this.getX() - comparedPos.getX());
         int yDiff = Math.abs(this.getY() - comparedPos.getY());

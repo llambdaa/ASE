@@ -53,7 +53,7 @@ public abstract class Entity {
     }
 
     public void move(Movement movement){
-        Position currPos = this.getPosition();
-        this.setPosition(new Position((currPos.getX()+movement.getXDiff()), (currPos.getY())+movement.getYDiff()));
+        this.position.setX(movement.getXDiff());
+        this.position.setY(movement.getYDiff());
     }
 }
