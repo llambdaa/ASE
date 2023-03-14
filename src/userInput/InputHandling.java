@@ -1,5 +1,6 @@
 package userInput;
 
+import domain.Movement;
 import domain.Player;
 import domain.Position;
 
@@ -19,23 +20,19 @@ public class InputHandling implements KeyListener {
     private void registerKeys() {
         keyHandling.put(KeyEvent.VK_W, () -> {
             //w
-            Position currentPos = player.getPosition();
-            player.setPosition(new Position(currentPos.getX(), currentPos.getY() + 1));
+           player.move(Movement.UP);
         });
         keyHandling.put(KeyEvent.VK_A, () -> {
             //a
-            Position currentPos = player.getPosition();
-            player.setPosition(new Position(currentPos.getX() - 1, currentPos.getY()));
+           player.move(Movement.LEFT);
         });
         keyHandling.put(KeyEvent.VK_S, () -> {
             //s
-            Position currentPos = player.getPosition();
-            player.setPosition(new Position(currentPos.getX(), currentPos.getY() - 1));
+            player.move(Movement.DOWN);
         });
         keyHandling.put(KeyEvent.VK_D, () -> {
             //d
-            Position currentPos = player.getPosition();
-            player.setPosition(new Position(currentPos.getX() + 1, currentPos.getY()));
+            player.move(Movement.RIGHT);
         });
     }
 

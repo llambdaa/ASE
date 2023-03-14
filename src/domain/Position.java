@@ -5,14 +5,8 @@ public class Position {
     private int y;
 
     public Position(int x, int y) {
-        this.x = x;
-        this.y = y;
-        if(x < 0){
-            this.x = 0;
-        }
-        if(y < 0){
-            this.y = 0;
-        }
+        this.x = Math.max(x,0);
+        this.y = Math.max(y,0);
     }
 
     public int getX() {
@@ -31,6 +25,6 @@ public class Position {
 
     @Override
     public String toString(){
-        return new String("X: " + this.x + ", Y: " + this.y);
+        return "X: " + this.x + ", Y: " + this.y;
     }
 }
